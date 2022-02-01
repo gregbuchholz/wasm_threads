@@ -158,3 +158,8 @@ Versions:
     $ wasm-validate --version
     1.0.13
 
+
+...you will also need to compile the gxx_personality_v0_stub.cpp file in the src/ directory:
+
+    emcc -c gxx_personality_v0_stub.cpp -pthread
+
