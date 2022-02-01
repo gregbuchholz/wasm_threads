@@ -1,20 +1,24 @@
-#Rust generating invalid wasm file on threaded program?
+# Rust generating invalid wasm file on threaded program (v1.6 vs. 1.59)?
 
 This repository is trying to demonstrate an issue when trying to compile a
-multi-theaded Rust program targeting wasm32-unknown-emscripten.
+multi-theaded Rust program targeting wasm32-unknown-emscripten.  To reproduce
+the error, you will need to have a very recent (git) version of LLVM in Emscripten,
+to get around [this issue](https://github.com/emscripten-core/emscripten/issues/15891).
 
 When using a custom compiled version of rustc 1.59.0-dev, I get a wasm file
 that works as expected.  When using rust 1.60.0-nightly, I get the [error](https://github.com/gregbuchholz/wasm_threads/blob/main/error.txt):
+
 ```
 [parse exception: attempted pop from empty stack / beyond block start boundary at 24770 (at 0:24770)]
 Fatal: error in parsing input
 emcc: error: '/home/greg/Extras/temp/emsdk/binaryen/main_64bit_binaryen/bin/wasm-emscripten-finalize --minimize-wasm-changes /home/greg/rust-examples/wasm-threads/target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm -o /home/greg/rust-examples/wasm-threads/target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm --detect-features' failed (returned 1)
 ```
 
-...running `wasm-emscripten-finalize` with `--debug`:
+...running `wasm-emscripten-finalize` with `--debug` on the "broken" \*.wasm [results in](https://github.com/gregbuchholz/wasm_threads/blob/main/w-e-f_out.txt):
 
 ```
 $ wasm-emscripten-finalize --minimize-wasm-changes target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm -o target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm --detect-features --debug
+
 <snip>
 
 readExpression seeing 16
@@ -56,6 +60,9 @@ target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:00072a1: error: 
 target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:00073b5: error: type mismatch at end of function, expected [] but got [i32, i32, i32]
 target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:0007529: error: type mismatch at end of function, expected [] but got [i32, i32, i32]
 target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:0007940: error: type mismatch at end of function, expected [] but got [i32, i32, i32]
+```
+<details><summary>outdated problem summary</summary>
+```
 target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:000798a: error: type mismatch at end of function, expected [] but got [i32, i32, i32]
 target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:0007a32: error: type mismatch in drop, expected [any] but got []
 target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:0007db3: error: type mismatch at end of function, expected [] but got [i32, i32]
@@ -110,7 +117,17 @@ target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:001864a: error: 
 target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:0018c22: error: type mismatch at end of function, expected [] but got [i32, i32, i32, i32]
 target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:00191b1: error: type mismatch at end of function, expected [] but got [i32]
 ```
+</details>
 
+The working wasm file compiled with 1.59.0 is included in the repository, it can be run with either:
+
+    node --experimental-wasm-threads --experimental-wasm-bulk-memory target/wasm32-unknown-emscripten/release/deps/wasm_threads.js
+
+...or...
+
+    emrun index-wasm.html
+
+...and the broken version of the wasm file is at: [target/wasm32-unknown-emscripten/release/deps/broken_wasm_threads.wasm]()
 
 Versions:
 
@@ -140,3 +157,4 @@ Versions:
 
     $ wasm-validate --version
     1.0.13
+
