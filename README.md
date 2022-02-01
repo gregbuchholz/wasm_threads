@@ -61,7 +61,7 @@ target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:00073b5: error: 
 target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:0007529: error: type mismatch at end of function, expected [] but got [i32, i32, i32]
 target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:0007940: error: type mismatch at end of function, expected [] but got [i32, i32, i32]
 ```
-<details><summary>outdated problem summary</summary>
+<details>
 ```
 target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:000798a: error: type mismatch at end of function, expected [] but got [i32, i32, i32]
 target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:0007a32: error: type mismatch in drop, expected [any] but got []
