@@ -112,14 +112,25 @@ target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm:00191b1: error: 
 ```
 
 
-```
 Versions:
 
-    $ rustc +nightly --version
+    $ rustc +nightly --version --verbose
     rustc 1.60.0-nightly (a00e130da 2022-01-29)
+    binary: rustc
+    commit-hash: a00e130dae74a213338e2b095ec855156d8f3d8a
+    commit-date: 2022-01-29
+    host: x86_64-unknown-linux-gnu
+    release: 1.60.0-nightly
+    LLVM version: 13.0.0
 
-    $ rustc +stage1 --version
+    $ rustc +stage1 --version --verbose
     rustc 1.59.0-dev
+    binary: rustc
+    commit-hash: unknown
+    commit-date: unknown
+    host: x86_64-unknown-linux-gnu
+    release: 1.59.0-dev
+    LLVM version: 13.0.0
 
     $ emcc --version
     emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 3.1.3-git (a1a755948a6e25c0fa62fc8fdcb89dc372618a63)
@@ -129,4 +140,3 @@ Versions:
 
     $ wasm-validate --version
     1.0.13
-```
