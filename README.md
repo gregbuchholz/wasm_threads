@@ -127,7 +127,7 @@ The working wasm file compiled with 1.59.0 is included in the repository, it can
 
     emrun index-wasm.html
 
-...and the broken version of the wasm file is at: [target/wasm32-unknown-emscripten/release/deps/broken_wasm_threads.wasm]()
+...and the broken version (compiled with 1.6.0) of the wasm file that chokes `wasm-emscripten-finalize` is at: [target/wasm32-unknown-emscripten/release/deps/broken_wasm_threads.wasm](https://github.com/gregbuchholz/wasm_threads/blob/main/target/wasm32-unknown-emscripten/release/deps/broken_wasm_threads.wasm)
 
 Versions:
 
