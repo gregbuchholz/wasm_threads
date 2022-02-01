@@ -4,11 +4,11 @@ This repository is trying to demonstrate an issue when trying to compile a
 multi-theaded Rust program targeting wasm32-unknown-emscripten.
 
 When using a custom compiled version of rustc 1.59.0-dev, I get a wasm file
-that works as expected.  When using rust 1.60.0-nightly, I get the [error]():
+that works as expected.  When using rust 1.60.0-nightly, I get the [error](https://github.com/gregbuchholz/wasm_threads/blob/main/error.txt):
 ```
-          [parse exception: attempted pop from empty stack / beyond block start boundary at 24770 (at 0:24770)]
-          Fatal: error in parsing input
-          emcc: error: '/home/greg/Extras/temp/emsdk/binaryen/main_64bit_binaryen/bin/wasm-emscripten-finalize --minimize-wasm-changes /home/greg/rust-examples/wasm-threads/target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm -o /home/greg/rust-examples/wasm-threads/target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm --detect-features' failed (returned 1)
+[parse exception: attempted pop from empty stack / beyond block start boundary at 24770 (at 0:24770)]
+Fatal: error in parsing input
+emcc: error: '/home/greg/Extras/temp/emsdk/binaryen/main_64bit_binaryen/bin/wasm-emscripten-finalize --minimize-wasm-changes /home/greg/rust-examples/wasm-threads/target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm -o /home/greg/rust-examples/wasm-threads/target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm --detect-features' failed (returned 1)
 ```
 
 ...running `wasm-emscripten-finalize` with `--debug`:
@@ -44,7 +44,7 @@ zz node: Drop
 Fatal: error in parsing input
 ```
 
-[wasm-validate]() doesn't seem to like the input to `wasm-emscripten-finalize` either:
+[wasm-validate](https://webassembly.github.io/wabt/doc/wasm-validate.1.html) doesn't seem to like the input to `wasm-emscripten-finalize` either:
 
 ```
 $ wasm-validate --enable-threads target/wasm32-unknown-emscripten/release/deps/wasm_threads.wasm
