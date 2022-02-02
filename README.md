@@ -5,7 +5,7 @@ multi-theaded Rust program targeting wasm32-unknown-emscripten.  To reproduce
 the error, you will need to have a very recent (git) version of LLVM in Emscripten,
 to get around [this issue](https://github.com/emscripten-core/emscripten/issues/15891).
 
-When using a custom compiled version of rustc 1.59.0-dev, I get a wasm file
+When using a nightly 1.59.0-dev, from 2021-12-06 I get a wasm file
 that works as expected.  When using rust 1.60.0-nightly, I get the [error](https://github.com/gregbuchholz/wasm_threads/blob/main/error.txt):
 
 ```
@@ -140,14 +140,14 @@ Versions:
     release: 1.60.0-nightly
     LLVM version: 13.0.0
 
-    $ rustc +stage1 --version --verbose
-    rustc 1.59.0-dev
+    $ rustc +nightly-2021-12-06 --version --verbose
+    rustc 1.59.0-nightly (e2116acae 2021-12-05)
     binary: rustc
-    commit-hash: unknown
-    commit-date: unknown
+    commit-hash: e2116acae59654bfab2a9729a024f3e2fd6d4b02
+    commit-date: 2021-12-05
     host: x86_64-unknown-linux-gnu
-    release: 1.59.0-dev
-    LLVM version: 13.0.0
+    release: 1.59.0-nightly
+    LLVM version: 13.0.0 
 
     $ emcc --version
     emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 3.1.3-git (a1a755948a6e25c0fa62fc8fdcb89dc372618a63)
@@ -157,7 +157,6 @@ Versions:
 
     $ wasm-validate --version
     1.0.13
-
 
 ...you will also need to compile the gxx_personality_v0_stub.cpp file in the src/ directory:
 
